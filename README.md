@@ -79,23 +79,14 @@ Components:
 
 ## Models
 
-**Personal model**
+**User model**
 
 ```javascript
 {
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  students: [ { type: Schema.Types.ObjectId, ref:'Student' } ]
-}
-```
-
-**Student model**
-
-```javascript
-{
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  trains: [ { type: Schema.Types.ObjectId, ref:'Train' } ]
+  role: {type: String, enum: ['personal', 'student'], required: true}
+  students: [ { type: Schema.Types.ObjectId, ref:'User' } ]
 }
 ```
 
@@ -146,7 +137,7 @@ Components:
 | DELETE      | `/train/:trainId` |                              | 201            | 400          | delete trains                                                                                                              |
 | GET         | `/students/:personalId`     |                              |                |              | show students                                                                                                            |
 | POST        | `/students`         | { name, personalId, studentsId }  | 200            | 404          | add player                                                                                                                      |
-| GET      | `/students/:id`     |                              | 200            | 400          | See details of students                                                                                                                 
+| GET      | `/students/:studentsId`     |                              | 200            | 400          | See details of students
 
 
 <br>

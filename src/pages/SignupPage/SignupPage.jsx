@@ -2,6 +2,7 @@ import "./SignupPage.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
+import backgroundImage from "../../assets/gym.jpg";
 
 function SignupPage() {
   const [email, setEmail] = useState("");
@@ -46,31 +47,69 @@ function SignupPage() {
   };
 
   return (
-    <div className="SignupPage">
-      <h1>Sign Up</h1>
-
-      <form onSubmit={handleSignupSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
-
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
-
-        <label>Name:</label>
-        <input type="text" name="name" value={name} onChange={handleName} />
-
-        <button type="submit">Sign Up</button>
-      </form>
-
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-      <p>Already have account?</p>
+    <div
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+      className="bg-cover bg-center bg-no-repeat min-h-screen bg-gray-100  flex flex-col justify-center sm:py-12"
+    >
+      <div className="p-5 xs:p-0 mx-auto drop-shadow md:w-full md:max-w-md">
+        <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
+          <form onSubmit={handleSignupSubmit} className="px-5 py-7">
+            <h1 className="font-bold text-center text-2xl mb-5">Sign up</h1>
+            <label className="font-semibold text-left text-sm text-gray-600 pb-1 block">
+              Name
+            </label>
+            <input
+              type="text"
+              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              placeholder="Name"
+              value={name}
+              onChange={handleName}
+            />
+            <label className="font-semibold text-left text-sm text-gray-600 pb-1 block">
+              E-mail
+            </label>
+            <input
+              type="email"
+              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              placeholder="E-mail"
+              value={email}
+              onChange={handleEmail}
+            />
+            <label className="font-semibold text-left text-sm text-gray-600 pb-1 block">
+              Password
+            </label>
+            <input
+              type="password"
+              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              placeholder="Password"
+              value={password}
+              onChange={handlePassword}
+            />
+            <label className="font-semibold text-left text-sm text-gray-600 pb-1 block">
+              Role
+            </label>
+            <select
+              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Choose a role
+              </option>
+              <option value="personal-trainer">Personal Trainer</option>
+              <option value="student">Student</option>
+            </select>
+            <button
+              type="submit"
+              className="transition border-2 duration-200 bg-white hover:bg-black focus:bg-blue-700 focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 rounded-lg hover:text-white w-full py-2 text-sm"
+            >
+              Sign up
+            </button>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <p>Already have account?</p>
       <Link to={"/login"}> Login</Link>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

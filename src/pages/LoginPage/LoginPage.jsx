@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import authService from "../../services/auth.service";
+import backgroundImage from "../../assets/gym.jpg";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -45,27 +46,43 @@ function LoginPage() {
   };
 
   return (
-    <div className="LoginPage">
-      <h1>Login</h1>
-
-      <form onSubmit={handleLoginSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
-
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
-
-        <button type="submit">Login</button>
-      </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-      <p>Don't have an account yet?</p>
-      <Link to={"/signup"}> Sign Up</Link>
+    <div
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+      className="bg-cover bg-center bg-no-repeat min-h-screen  bg-gray-100 flex flex-col justify-center sm:py-12"
+    >
+      <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
+        <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
+          <form onSubmit={handleLoginSubmit} className="px-5 py-7">
+            <h1 className="font-bold text-center text-2xl mb-5">Login</h1>
+            <label className="font-semibold text-sm text-left text-gray-600 pb-1 block">
+              E-mail
+            </label>
+            <input
+              type="email"
+              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              placeholder="E-mail"
+              value={email}
+              onChange={handleEmail}
+            />
+            <label className="font-semibold text-sm text-left text-gray-600 pb-1 block">
+              Password
+            </label>
+            <input
+              type="password"
+              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              placeholder="Password"
+              value={password}
+              onChange={handlePassword}
+            />
+            <button
+              type="submit"
+              className="transition duration-200 bg-white hover:bg-black focus:bg-blue-700 focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 rounded-lg hover:text-white border-2 w-full py-2 text-sm"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

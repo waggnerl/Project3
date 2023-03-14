@@ -8,6 +8,7 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [role, setRole] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
@@ -15,11 +16,12 @@ function SignupPage() {
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
   const handleName = (e) => setName(e.target.value);
+  const handleRole = (e) => setRole(e.target.value);
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
-    const requestBody = { email, password, name };
+    const requestBody = { email, password, name, role };
 
     // Send a request to the server using axios
     /* 
@@ -80,7 +82,7 @@ function SignupPage() {
             </label>
             <input
               type="password"
-              className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              className="border rounded-lg px-3 py-2 mt-1 mb-5 text -sm w-full"
               placeholder="Password"
               value={password}
               onChange={handlePassword}
@@ -91,11 +93,12 @@ function SignupPage() {
             <select
               className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
               defaultValue=""
+              onChange={handleRole}
             >
               <option value="" disabled>
                 Choose a role
               </option>
-              <option value="personal-trainer">Personal Trainer</option>
+              <option value="personal">Personal Trainer</option>
               <option value="student">Student</option>
             </select>
             <button
@@ -106,7 +109,7 @@ function SignupPage() {
             </button>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
+            <Link to={"/login"}> Login</Link>
           </form>
         </div>
       </div>

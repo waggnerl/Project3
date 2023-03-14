@@ -23,7 +23,7 @@ function ViewStudents() {
   };
 
   const handleNavigate = (e) => {
-    if (e.target.tagName !== "BUTTON") {
+    if (e.target.id !== "delete") {
       navigate("/");
     }
   };
@@ -119,6 +119,7 @@ function ViewStudents() {
                           </p>
                           <div className="bottom-4 right-0 h-6 w-h-6 absolute">
                             <button
+                              id="delete"
                               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mx-2"
                               onClick={async (e) => {
                                 e.preventDefault();
@@ -129,7 +130,7 @@ function ViewStudents() {
                                 setReRender((prev) => !prev);
                               }}
                             >
-                              <BsFillTrashFill />
+                              <BsFillTrashFill id="delete" />
                             </button>
                           </div>
                         </td>

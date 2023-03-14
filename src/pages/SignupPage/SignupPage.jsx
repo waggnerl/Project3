@@ -100,13 +100,13 @@ function SignupPage() {
             </select>
             <button
               type="submit"
-              className="transition border-2 duration-200 bg-white hover:bg-black focus:bg-blue-700 focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 rounded-lg hover:text-white w-full py-2 text-sm"
+              className="transition border-2 duration-200 bg-white hover:bg-black focus:bg-white-700 focus:ring-2 focus:ring-white-600 focus:ring-opacity-50 rounded-lg hover:text-white w-full py-2 text-sm"
             >
               Sign up
             </button>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
+      <Link  to={"/login"}> Login</Link>
           </form>
         </div>
       </div>

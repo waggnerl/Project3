@@ -10,6 +10,7 @@ import ViewStudents from "./pages/ViewStudents/ViewStudents";
 import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
+import ViewTrains from "./pages/ViewTrains";
 
 function App() {
   return (
@@ -33,6 +34,15 @@ function App() {
           element={
             <IsPrivate>
               <ViewStudents />
+            </IsPrivate>
+          }
+        />
+
+        <Route
+          path="/trains"
+          element={
+            <IsPrivate>
+              <ViewTrains />
             </IsPrivate>
           }
         />

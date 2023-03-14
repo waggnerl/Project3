@@ -1,97 +1,139 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
-import studentService from "../../services/student.service";
-import { BsFillTrashFill } from "react-icons/bs";
-
+import trainService from "../../services/trains.service";
+import GymTrainImage from "../../assets/gym-train.jpg";
+import { format } from "date-fns";
 function ViewTrains() {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const { studentId, studentName } = useParams();
   const id = user._id;
-  const [students, setStudents] = useState([]);
+  const [trains, setTrains] = useState([]);
   const [studentsTeacher, setStudentsTeacher] = useState([]);
-  // const [studentToAdd, setStudentToAdd] = useState({});
+  const [trainToAdd, setTrainToAdd] = useState({});
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
   const [reRender, setReRender] = useState(false);
 
-  // const handleStudentToAdd = (e) => setStudentToAdd(e.target.value);
+  const handleName = (e) => setName(e.target.value);
+  const handleDescription = (e) => setDescription(e.target.value);
+  const handleStart = (e) => setStart(e.target.value);
+  const handleEnd = (e) => setEnd(e.target.value);
 
-  // const handleAddStudent = async (e) => {
-  //   e.preventDefault();
-  //   await studentService.addStudentToPersonal(id, studentToAdd);
-  //   setReRender((prev) => !prev);
-  // };
-
-  const handleNavigate = (e) => {
-    if (e.target.id !== "delete") {
-      navigate("/");
-    }
+  const handleAddTrain = async (e) => {
+    e.preventDefault();
+    const interval = `${format(new Date(start), "dd/MM/yyyy")}-${format(
+      new Date(end),
+      "dd/MM/yyyy"
+    )}`;
+    await trainService.addTrain(name, description, interval, studentId);
+    setReRender((prev) => !prev);
   };
 
   useEffect(() => {
-    const getStudentsFromPersonal = async () => {
-      const data = await studentService.getOnesFromPersonal(id);
-      setStudentsTeacher(data.data);
+    const getTrains = async () => {
+      const data = await trainService.getAll(studentId);
+
+      setTrains(data.data.trains);
     };
-    // const getStudents = async () => {
-    //   const data = await studentService.getAll();
-    //   setStudents(data.data);
-    // };
+    // getStudentsFromPersonal();
+    getTrains();
+  }, [studentId, reRender]);
+  return (
+    <div className="container mx-auto px-4 sm:px-8">
+      <div className="py-8">
+        <div>
+          <h2 className="text-2xl font-semibold text-left leading-tight">
+            {studentName}
+          </h2>
+          <form className=" flex flex-col w-1/5 py-4">
+            <label htmlFor="my-modal" className="btn">
+              Create New Train
+            </label>
 
-    getStudentsFromPersonal();
-    // getStudents();
-  }, [id, reRender]);
-
-  if (students && studentsTeacher && user.role === "personal")
-    return (
-      <div className="container mx-auto px-4 sm:px-8">
-        <div className="py-8">
-          <div>
-            <h2 className="text-2xl font-semibold text-left leading-tight">
-              {user && user.name}
-            </h2>
-            <form className=" flex flex-col">
-              <h2 className="text-xl font-light text-left py-2 leading-tight">
-                Include Students
-              </h2>
-              {/* <select
-                className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                defaultValue=""
-                onChange={handleStudentToAdd}
-              >
-                <option value="" disabled>
-                  Choose a Student
-                </option>
-                {students.map((student) => {
-                  return (
-                    <option key={student._id} value={student._id}>
-                      {student.name}
-                    </option>
-                  );
-                })}
-              </select>
-              <button
-                onClick={handleAddStudent}
-                class="w-full h-12 px-6 text-black transition-colors duration-150  rounded-lg focus:shadow-outline bg-sky-100 hover:bg-sky-200"
-              >
-                Include Student
-              </button> */}
-            </form>
-            <h2 className="text-xl font-light text-left py-2 leading-tight">
-              Trains
-            </h2>
-            <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
-              <div className="carousel-item ">
-                <h1>hey</h1>
-              </div>
-              <div className="carousel-item ">
-                <h1>hey</h1>
+            {/* Put this part before </body> tag */}
+            <input type="checkbox" id="my-modal" className="modal-toggle" />
+            <div className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Criar Novo Treino</h3>
+                <div className="py-4">
+                  <div className="form-control w-full ">
+                    <label className="label">
+                      <span className="label-text">Name</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="input input-bordered w-full "
+                      onChange={handleName}
+                    />
+                    <label className="label">
+                      <span className="label-text">Description</span>
+                    </label>
+                    {/* <input
+                        type="text"
+                        className="input input-bordered w-full "
+                      /> */}
+                    <textarea
+                      className="textarea  textarea-bordered w-full"
+                      placeholder="Bio"
+                      onChange={handleDescription}
+                    ></textarea>
+                    <label className="label">
+                      <span className="label-text">Start</span>
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered w-full "
+                      onChange={handleStart}
+                    />
+                    <label className="label">
+                      <span className="label-text">End</span>
+                    </label>
+                    <input
+                      type="date"
+                      className="input input-bordered w-full "
+                      onChange={handleEnd}
+                    />
+                  </div>
+                </div>
+                <div className="modal-action">
+                  <button className="btn" onClick={handleAddTrain}>
+                    Send Data
+                  </button>
+                  <label htmlFor="my-modal" className="btn">
+                    Close
+                  </label>
+                </div>
               </div>
             </div>
+          </form>
+          <div className="flex flex-wrap gap-6">
+            {trains.map((train) => (
+              <div key={train._id} className="card w-96 bg-base-100 shadow-xl">
+                <figure>
+                  <img src={GymTrainImage} alt="Shoes" />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">{train.name}</h2>
+                  <h2 className="text-left text-gray-400 text-xs">
+                    {train.interval}
+                  </h2>
+                  <p className="text-left">{train.description}</p>
+                  <div className="card-actions justify-end">
+                    <button className="btn">Look Exercises</button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
 export default ViewTrains;

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-class StudentService {
+class TrainService {
   constructor() {
     this.api = axios.create({
       baseURL: process.env.REACT_APP_SERVER_URL || "http://localhost:5005",
@@ -8,8 +8,13 @@ class StudentService {
   }
 
   // POST /api/students
-  addStudentToPersonal = async (id, studentToAdd) => {
-    return this.api.post(`/student/${id}/${studentToAdd}`);
+  addTrain = async (name, description, interval, studentId) => {
+    return this.api.post(`/train/create`, {
+      name,
+      description,
+      interval,
+      studentId,
+    });
   };
 
   // Delete /api/students
@@ -18,8 +23,8 @@ class StudentService {
   };
 
   // GET /api/students
-  getAll = async () => {
-    return this.api.get("/student");
+  getAll = async (userId) => {
+    return this.api.get(`/train/all/${userId}`);
   };
 
   // GET /api/students/:id
@@ -40,6 +45,6 @@ class StudentService {
 }
 
 // Create one instance of the service
-const studentService = new StudentService();
+const trainService = new TrainService();
 
-export default studentService;
+export default trainService;

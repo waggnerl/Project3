@@ -22,12 +22,6 @@ function ViewStudents() {
     setReRender((prev) => !prev);
   };
 
-  const handleNavigate = (e) => {
-    if (e.target.id !== "delete") {
-      navigate("/");
-    }
-  };
-
   useEffect(() => {
     const getStudentsFromPersonal = async () => {
       const data = await studentService.getOnesFromPersonal(id);
@@ -99,7 +93,11 @@ function ViewStudents() {
                     return (
                       <tr
                         key={student._id}
-                        onClick={handleNavigate}
+                        onClick={(e) => {
+                          if (e.target.id !== "delete") {
+                            navigate(`/trains/${student._id}/${student.name}`);
+                          }
+                        }}
                         className="hover:bg-sky-100"
                       >
                         <td className="px-5 py-5 border-b border-gray-200  text-sm w-2/5">

@@ -44,6 +44,8 @@ function Navbar() {
           </Link>
           {isLoggedIn && (
             <>
+              <button onClick={logOutUser}>Logout</button>
+
               <Link to="/profile">
                 <button class="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-slate-400 mr-4">
                   Profile

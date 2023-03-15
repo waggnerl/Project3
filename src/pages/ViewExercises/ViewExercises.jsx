@@ -34,6 +34,16 @@ function ViewTrains() {
     setActivicties((prev) => [...prev, activicty]);
   };
 
+  const handleDeleteActivicties = (e) => {
+    e.preventDefault();
+    setActivicties((prev) =>
+      prev.filter((el, index) => {
+        return index.toString() !== e.target.id;
+      })
+    );
+    console.log(activicties);
+  };
+
   const handleAddExercise = async (e) => {
     e.preventDefault();
     try {
@@ -121,8 +131,8 @@ function ViewTrains() {
                       <option disabled selected>
                         Select One
                       </option>
-                      <option>30 Seconds</option>
                       <option>20 Seconds</option>
+                      <option>30 Seconds</option>
                       <option>1 min</option>
                       <option>1 min 30 Seconds</option>
                       <option>2 min</option>
@@ -157,21 +167,29 @@ function ViewTrains() {
                       </button>
                     </div>
                     <div className="h-8 flex w-full items-center flex-wrap py-4">
-                      {activicties.map((activicty) => (
+                      {activicties.map((activicty, index) => (
                         <div className="badge badge-info gap-2">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            className="inline-block w-4 h-4 stroke-current"
+                          <button
+                            id={index}
+                            onClick={handleDeleteActivicties}
+                            className="h-full flex items-center"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M6 18L18 6M6 6l12 12"
-                            ></path>
-                          </svg>
+                            <svg
+                              id={index}
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              className="inline-block w-4 h-4 stroke-current"
+                            >
+                              <path
+                                id={index}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M6 18L18 6M6 6l12 12"
+                              ></path>
+                            </svg>
+                          </button>
                           {activicty}
                         </div>
                       ))}

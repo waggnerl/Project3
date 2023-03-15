@@ -5,11 +5,14 @@ import { AuthContext } from "../../context/auth.context";
 import studentService from "../../services/student.service";
 import { BsFillTrashFill } from "react-icons/bs";
 import { toast } from "react-toastify";
+import axios from "axios";
+
 function ViewStudents() {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const id = user._id;
   const [students, setStudents] = useState([]);
+  const [userName, setUserName] = useState("");
   const [studentsTeacher, setStudentsTeacher] = useState([]);
   const [studentToAdd, setStudentToAdd] = useState({});
   const [reRender, setReRender] = useState(false);
@@ -53,7 +56,19 @@ function ViewStudents() {
       const data = await studentService.getAll();
       setStudents(data.data);
     };
+    const getProfile = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_SERVER_URL}/profile/${id}`
+        );
+        console.log(response.data);
+        setUserName(response.data.name);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
+    getProfile();
     getStudentsFromPersonal();
     getStudents();
   }, [id, reRender]);
@@ -64,7 +79,7 @@ function ViewStudents() {
         <div className="py-8">
           <div>
             <h2 className="text-2xl font-semibold text-left leading-tight">
-              {user && user.name}
+              {userName}
             </h2>
             <form className=" flex flex-col">
               <h2 className="text-xl font-light text-left py-2 leading-tight">
@@ -120,7 +135,7 @@ function ViewStudents() {
                             e.target.id !== "delete" &&
                             e.target.tagName !== "path"
                           ) {
-                            navigate(`/trains/${student._id}/${student.name}`);
+                            navigate(`/trains/${student._id}`);
                           }
                         }}
                         className="hover:bg-sky-100"

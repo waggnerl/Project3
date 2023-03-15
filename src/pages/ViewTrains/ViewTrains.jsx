@@ -8,9 +8,10 @@ import { toast } from "react-toastify";
 
 function ViewTrains() {
   const navigate = useNavigate();
-  const { studentId, studentName } = useParams();
+  const { studentId } = useParams();
   const [trains, setTrains] = useState([]);
   const [name, setName] = useState("");
+  const [studentName, setStudentName] = useState("");
   const [description, setDescription] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -61,7 +62,7 @@ function ViewTrains() {
   useEffect(() => {
     const getExercises = async () => {
       const data = await trainService.getAll(studentId);
-
+      setStudentName(data.data.name);
       setTrains(data.data.trains);
     };
     getExercises();

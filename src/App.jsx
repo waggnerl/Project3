@@ -33,7 +33,7 @@ function App() {
         />
 
         <Route
-          path="/trains/:studentId/:studentName"
+          path="/trains/:studentId"
           element={
             <IsPrivate>
               <ViewTrains />

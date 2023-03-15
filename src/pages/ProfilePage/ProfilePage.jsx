@@ -36,7 +36,7 @@ function ProfilePage(props) {
         `${process.env.REACT_APP_SERVER_URL}/profile/edit/${id}`,
         body
       );
-      
+
       navigate(`/profile/${id}`);
     } catch (error) {
       console.log(error);
@@ -67,7 +67,7 @@ function ProfilePage(props) {
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className="">
-        <div className="bg-white shadow-xl rounded-lg py-4 h-[450px] w-96 flex flex-col items-center	">
+        <div className="bg-white shadow-xl rounded-lg p-12 h-[450px] w-96 flex flex-col items-center	">
           <div className="w-24 mask mask-squircle justify-center">
             <img src={img} alt={img} />
           </div>
@@ -89,6 +89,7 @@ function ProfilePage(props) {
                       <td className="px-2 py-2 text-base">
                         <input
                           type="text"
+                          className="input input-bordered w-full max-w-xs"
                           onChange={handleName}
                           defaultValue={name}
                         />
@@ -101,7 +102,10 @@ function ProfilePage(props) {
                         Email
                       </td>
                       <td className="px-2 py-2">
-                        <p className="text-base">{email}</p>
+                        <input
+                          value={email}
+                          className="input input-bordered w-full max-w-xs"
+                        ></input>
                       </td>
                     </tr>
                   }
@@ -111,7 +115,7 @@ function ProfilePage(props) {
                     </td>
                     <td className="px-2 py-2 ">
                       <input
-                        className="file-input file-input-bordered file-input-xs w-3/6 max-w-xs"
+                        className="file-input file-input-bordered file-input-xs w-full max-w-xs"
                         type="file"
                         /* value={img} */
                         onChange={handleFileUpload}

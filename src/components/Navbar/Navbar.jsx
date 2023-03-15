@@ -1,5 +1,5 @@
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
 
@@ -44,14 +44,14 @@ function Navbar() {
           </Link>
           {isLoggedIn && (
             <>
-              <button onClick={logOutUser}>Logout</button>
+              <button class="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-slate-400 mr-4" onClick={logOutUser}>Logout</button>
 
-              <Link to="/profile">
+              <Link to={`/profile/${user._id}`}>
                 <button class="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-slate-400 mr-4">
                   Profile
                 </button>
               </Link>
-              <span>{user && user.name}</span>
+              
             </>
           )}
           {!isLoggedIn && (

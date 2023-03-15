@@ -76,7 +76,7 @@ function LoginPage() {
             />
             <button
               type="submit"
-              className="transition duration-200 bg-white hover:bg-black focus:bg-blue-700 focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 rounded-lg hover:text-white border-2 w-full py-2 text-sm"
+              className="transition duration-200 bg-white hover:bg-black focus:bg-gray-700 focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50 rounded-lg hover:text-white border-2 w-full py-2 text-sm"
             >
               Login
             </button>

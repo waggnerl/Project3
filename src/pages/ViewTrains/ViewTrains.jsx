@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../../context/auth.context";
+
 import trainService from "../../services/trains.service";
 import GymTrainImage from "../../assets/gym-train.jpg";
 import { format } from "date-fns";
 function ViewTrains() {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
   const { studentId, studentName } = useParams();
-  const id = user._id;
   const [trains, setTrains] = useState([]);
-  const [studentsTeacher, setStudentsTeacher] = useState([]);
-  const [trainToAdd, setTrainToAdd] = useState({});
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [start, setStart] = useState("");
@@ -35,13 +30,12 @@ function ViewTrains() {
   };
 
   useEffect(() => {
-    const getTrains = async () => {
+    const getExercises = async () => {
       const data = await trainService.getAll(studentId);
 
       setTrains(data.data.trains);
     };
-    // getStudentsFromPersonal();
-    getTrains();
+    getExercises();
   }, [studentId, reRender]);
   return (
     <div className="container mx-auto px-4 sm:px-8">
@@ -73,10 +67,7 @@ function ViewTrains() {
                     <label className="label">
                       <span className="label-text">Description</span>
                     </label>
-                    {/* <input
-                        type="text"
-                        className="input input-bordered w-full "
-                      /> */}
+
                     <textarea
                       className="textarea  textarea-bordered w-full"
                       placeholder="Bio"
@@ -124,7 +115,15 @@ function ViewTrains() {
                   </h2>
                   <p className="text-left">{train.description}</p>
                   <div className="card-actions justify-end">
-                    <button className="btn">Look Exercises</button>
+                    <button
+                      className="btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(`/exercises/${train._id}/${studentName}`);
+                      }}
+                    >
+                      Look Exercises
+                    </button>
                   </div>
                 </div>
               </div>

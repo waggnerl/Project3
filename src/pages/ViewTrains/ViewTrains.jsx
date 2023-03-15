@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import trainService from "../../services/trains.service";
 import GymTrainImage from "../../assets/gym-train.jpg";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
+
 function ViewTrains() {
   const navigate = useNavigate();
   const { studentId, studentName } = useParams();
@@ -25,8 +27,35 @@ function ViewTrains() {
       new Date(end),
       "dd/MM/yyyy"
     )}`;
-    await trainService.addTrain(name, description, interval, studentId);
-    setReRender((prev) => !prev);
+    try {
+      const data = await trainService.addTrain(
+        name,
+        description,
+        interval,
+        studentId
+      );
+      toast.success(data.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setReRender((prev) => !prev);
+    } catch (err) {
+      const errorDescription = err.response.data.message;
+      toast.error(errorDescription, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 
   useEffect(() => {
@@ -70,7 +99,6 @@ function ViewTrains() {
 
                     <textarea
                       className="textarea  textarea-bordered w-full"
-                      placeholder="Bio"
                       onChange={handleDescription}
                     ></textarea>
                     <label className="label">
@@ -114,16 +142,52 @@ function ViewTrains() {
                     {train.interval}
                   </h2>
                   <p className="text-left">{train.description}</p>
-                  <div className="card-actions justify-end">
+                  <div className="flex justify-end gap-2">
                     <button
-                      className="btn"
-                      onClick={(e) => {
+                      onClick={async (e) => {
                         e.preventDefault();
-                        navigate(`/exercises/${train._id}/${studentName}`);
+                        try {
+                          const data = await trainService.deleteProject(
+                            train._id
+                          );
+                          toast.success(data.data.message, {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                          });
+                          setReRender((prev) => !prev);
+                        } catch (err) {
+                          const errorDescription = err.response.data.message;
+                          toast.error(errorDescription, {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                          });
+                        }
                       }}
+                      className="btn btn-error"
                     >
-                      Look Exercises
+                      Delete Train
                     </button>
+                    <div className="card-actions justify-end">
+                      <button
+                        className="btn "
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigate(`/exercises/${train._id}/${studentName}`);
+                        }}
+                      >
+                        Look Exercises
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

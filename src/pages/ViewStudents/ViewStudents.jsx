@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
 import studentService from "../../services/student.service";
 import { BsFillTrashFill } from "react-icons/bs";
-
+import { toast } from "react-toastify";
 function ViewStudents() {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -18,7 +18,29 @@ function ViewStudents() {
 
   const handleAddStudent = async (e) => {
     e.preventDefault();
-    await studentService.addStudentToPersonal(id, studentToAdd);
+    try {
+      const data = await studentService.addStudentToPersonal(id, studentToAdd);
+      toast.success(data.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (err) {
+      const errorDescription = err.response.data.message;
+      toast.error(errorDescription, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
     setReRender((prev) => !prev);
   };
 
@@ -94,7 +116,10 @@ function ViewStudents() {
                       <tr
                         key={student._id}
                         onClick={(e) => {
-                          if (e.target.id !== "delete") {
+                          if (
+                            e.target.id !== "delete" &&
+                            e.target.tagName !== "path"
+                          ) {
                             navigate(`/trains/${student._id}/${student.name}`);
                           }
                         }}
@@ -115,16 +140,43 @@ function ViewStudents() {
                           <p className="text-gray-900 whitespace-no-wrap text-center">
                             {student.name}
                           </p>
-                          <div className="bottom-4 right-0 h-6 w-h-6 absolute">
+                          <div
+                            id="delete"
+                            className="bottom-4 right-0 h-6 w-h-6 absolute"
+                          >
                             <button
                               id="delete"
-                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mx-2"
+                              className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-4 rounded-full mx-2"
                               onClick={async (e) => {
                                 e.preventDefault();
-                                await studentService.deleteStudentFromPersonal(
-                                  id,
-                                  student._id
-                                );
+                                try {
+                                  const data =
+                                    await studentService.deleteStudentFromPersonal(
+                                      id,
+                                      student._id
+                                    );
+                                  toast.success(data.data.message, {
+                                    position: "top-center",
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                  });
+                                } catch (err) {
+                                  const errorDescription =
+                                    err.response.data.message;
+                                  toast.error(errorDescription, {
+                                    position: "top-center",
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                  });
+                                }
                                 setReRender((prev) => !prev);
                               }}
                             >

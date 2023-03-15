@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/auth.context";
 import exerciseService from "../../services/exercise.service";
 import GymTrainImage from "../../assets/gym-train.jpg";
 import { AiOutlinePlus } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 function ViewTrains() {
   const navigate = useNavigate();
@@ -35,15 +36,38 @@ function ViewTrains() {
 
   const handleAddExercise = async (e) => {
     e.preventDefault();
-    await exerciseService.addExercise(
-      name,
-      description,
-      interval,
-      reps,
-      sets,
-      trainId,
-      activicties
-    );
+    try {
+      const data = await exerciseService.addExercise(
+        name,
+        description,
+        interval,
+        reps,
+        sets,
+        trainId,
+        activicties
+      );
+      toast.success(data.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (err) {
+      const errorDescription = err.response.data.message;
+      toast.error(errorDescription, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
     setReRender((prev) => !prev);
   };
 
@@ -97,11 +121,11 @@ function ViewTrains() {
                       <option disabled selected>
                         Select One
                       </option>
-                      <option value="30">30 Seconds</option>
-                      <option value="20">20 Seconds</option>
-                      <option value="60">1 min</option>
-                      <option value="90">1 min 30 Seconds</option>
-                      <option value="120">2 min</option>
+                      <option>30 Seconds</option>
+                      <option>20 Seconds</option>
+                      <option>1 min</option>
+                      <option>1 min 30 Seconds</option>
+                      <option>2 min</option>
                     </select>
                     <label className="label">
                       <span className="label-text">Reps</span>
@@ -191,9 +215,46 @@ function ViewTrains() {
                       {exercise.sets}
                     </p>
                   </div>
-                  <label htmlFor="my-modal2" className="btn">
-                    See Activicties
-                  </label>
+                  <div className="flex justify-end gap-2">
+                    <button
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        try {
+                          const data = await exerciseService.deleteProject(
+                            trainId,
+                            exercise._id
+                          );
+                          toast.success(data.data.message, {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                          });
+                          setReRender((prev) => !prev);
+                        } catch (err) {
+                          const errorDescription = err.response.data.message;
+                          toast.error(errorDescription, {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                          });
+                        }
+                      }}
+                      className="btn btn-error"
+                    >
+                      Delete Train
+                    </button>
+                    <label htmlFor="my-modal2" className="btn">
+                      See Activicties
+                    </label>
+                  </div>
 
                   {/* Put this part before </body> tag */}
                   <input

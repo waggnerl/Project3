@@ -39,8 +39,10 @@ class TrainService {
   };
 
   // DELETE /api/students/:id
-  deleteProject = async (id) => {
-    return this.api.delete(`/api/students/${id}`);
+  deleteProject = async (trainId) => {
+    return this.api.post(`/train/delete`, {
+      trainId,
+    });
   };
 }
 

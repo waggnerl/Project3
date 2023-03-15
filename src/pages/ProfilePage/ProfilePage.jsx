@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import backgroundImage from "../../assets/gym.jpg";
 import profileImg from "../../assets/profile.png";
+import service from "../../api/service";
 
 function ProfilePage(props) {
   const { id } = useParams();
@@ -14,7 +15,18 @@ function ProfilePage(props) {
   const navigate = useNavigate();
 
   const handleName = (e) => setName(e.target.value);
-  const handleImg = (e) => setImg(e.target.value);
+
+  const handleFileUpload = (e) => {
+    const uploadData = new FormData();
+    uploadData.append("img", e.target.files[0]);
+
+    service
+      .uploadImage(uploadData)
+      .then((response) => {
+        setImg(response.fileUrl);
+      })
+      .catch((err) => console.log("Error while uploading the file: ", err));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +36,7 @@ function ProfilePage(props) {
         `${process.env.REACT_APP_SERVER_URL}/profile/edit/${id}`,
         body
       );
+      
       navigate(`/profile/${id}`);
     } catch (error) {
       console.log(error);
@@ -39,6 +52,7 @@ function ProfilePage(props) {
         console.log(response.data);
         setEmail(response.data.email);
         setName(response.data.name);
+        setImg(response.data.img);
       } catch (error) {
         console.log(error);
       }
@@ -67,28 +81,41 @@ function ProfilePage(props) {
             <form onSubmit={handleSubmit}>
               <table className="text-xs my-3">
                 <tbody>
+                  {
+                    <tr>
+                      <td className="px-2 py-2 text-gray-500 font-semibold">
+                        Name
+                      </td>
+                      <td className="px-2 py-2 text-base">
+                        <input
+                          type="text"
+                          onChange={handleName}
+                          defaultValue={name}
+                        />
+                      </td>
+                    </tr>
+                  }
+                  {
+                    <tr>
+                      <td className="px-2 py-2 text-gray-500 font-semibold">
+                        Email
+                      </td>
+                      <td className="px-2 py-2">
+                        <p className="text-base">{email}</p>
+                      </td>
+                    </tr>
+                  }
                   <tr>
-                    <td className="px-2 py-2 text-gray-500 font-semibold">
-                      Name
-                    </td>
-                    <td className="px-2 py-2">
-                      <input
-                        type="text"
-                        onChange={handleName}
-                        defaultValue={name}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-2 py-2 text-gray-500 font-semibold">
+                    <td className="px-2 py-2 text-gray-500 font-semibold ">
                       Profile Image
                     </td>
-                    <td className="px-2 py-2">
+                    <td className="px-2 py-2 ">
                       <input
+                        className="file-input file-input-bordered file-input-xs w-3/6 max-w-xs"
                         type="file"
-                        value={img}
-                        onChange={handleImg}
-                        defaultValue={img}
+                        /* value={img} */
+                        onChange={handleFileUpload}
+                        /* defaultValue={img} */
                       />
                     </td>
                   </tr>

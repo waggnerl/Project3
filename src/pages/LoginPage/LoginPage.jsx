@@ -4,11 +4,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import authService from "../../services/auth.service";
 import backgroundImage from "../../assets/gym.jpg";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const notify = () => toast("Wow so easy !");
 
   const navigate = useNavigate();
 
@@ -74,12 +78,23 @@ function LoginPage() {
               value={password}
               onChange={handlePassword}
             />
-            <button
+            <button onClick={notify}
               type="submit"
               className="transition duration-200 bg-white hover:bg-black focus:bg-gray-700 focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50 rounded-lg hover:text-white border-2 w-full py-2 text-sm"
             >
               Login
             </button>
+            <ToastContainer 
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"/>
           </form>
         </div>
       </div>

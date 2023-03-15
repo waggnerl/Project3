@@ -6,11 +6,11 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import ViewStudents from "./pages/ViewStudents/ViewStudents";
-
+import ViewExercises from "./pages/ViewExercises/ViewExercises";
 import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
-import ViewTrains from "./pages/ViewTrains";
+import ViewTrains from "./pages/ViewTrains/ViewTrains";
 
 function App() {
   return (
@@ -43,6 +43,15 @@ function App() {
           element={
             <IsPrivate>
               <ViewTrains />
+            </IsPrivate>
+          }
+        />
+
+        <Route
+          path="/exercises/:trainId/:studentName"
+          element={
+            <IsPrivate>
+              <ViewExercises />
             </IsPrivate>
           }
         />

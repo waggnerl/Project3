@@ -44,7 +44,7 @@ function ViewTrains() {
           <h2 className="text-2xl font-semibold text-left leading-tight">
             {studentName}
           </h2>
-          <form className=" flex flex-col w-1/5 py-4">
+          <form className=" flex flex-col w-full sm:w-1/5 py-4">
             <label htmlFor="my-modal" className="btn">
               Create New Train
             </label>

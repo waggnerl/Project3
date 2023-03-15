@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
 import studentService from "../../services/student.service";
+import { BsFillTrashFill } from "react-icons/bs";
 
 function ViewStudents() {
   const navigate = useNavigate();
@@ -20,13 +21,6 @@ function ViewStudents() {
     await studentService.addStudentToPersonal(id, studentToAdd);
     setReRender((prev) => !prev);
   };
-
-  const handleNavigate = (e) => {
-    // if (e.target.tagName === !"BUTTON") {
-    //   navigate("/");
-    // }
-  };
-  const handleTest = (e) => e.preventDefault();
 
   useEffect(() => {
     const getStudentsFromPersonal = async () => {
@@ -50,7 +44,7 @@ function ViewStudents() {
             <h2 className="text-2xl font-semibold text-left leading-tight">
               {user && user.name}
             </h2>
-            <form onClick={handleAddStudent} className=" flex flex-col">
+            <form className=" flex flex-col">
               <h2 className="text-xl font-light text-left py-2 leading-tight">
                 Include Students
               </h2>
@@ -63,10 +57,17 @@ function ViewStudents() {
                   Choose a Student
                 </option>
                 {students.map((student) => {
-                  return <option value={student._id}>{student.name}</option>;
+                  return (
+                    <option key={student._id} value={student._id}>
+                      {student.name}
+                    </option>
+                  );
                 })}
               </select>
-              <button class="w-full h-12 px-6 text-black transition-colors duration-150  rounded-lg focus:shadow-outline bg-sky-100 hover:bg-sky-200">
+              <button
+                onClick={handleAddStudent}
+                class="w-full h-12 px-6 text-black transition-colors duration-150  rounded-lg focus:shadow-outline bg-sky-100 hover:bg-sky-200"
+              >
                 Include Student
               </button>
             </form>
@@ -90,7 +91,15 @@ function ViewStudents() {
                 <tbody>
                   {studentsTeacher.map((student) => {
                     return (
-                      <tr onClick={handleNavigate} className="hover:bg-sky-100">
+                      <tr
+                        key={student._id}
+                        onClick={(e) => {
+                          if (e.target.id !== "delete") {
+                            navigate(`/trains/${student._id}/${student.name}`);
+                          }
+                        }}
+                        className="hover:bg-sky-100"
+                      >
                         <td className="px-5 py-5 border-b border-gray-200  text-sm w-2/5">
                           <div className="flex items-center justify-center">
                             <div className="flex-shrink-0 w-10 h-10 table-cell">
@@ -102,13 +111,26 @@ function ViewStudents() {
                             </div>
                           </div>
                         </td>
-                        <td className="px-5 py-5 border-b border-gray-200  text-sm">
+                        <td className="px-5 py-5 border-b border-gray-200  text-sm relative">
                           <p className="text-gray-900 whitespace-no-wrap text-center">
                             {student.name}
                           </p>
-                          <form>
-                            <button onClick={handleTest}>Delete</button>
-                          </form>
+                          <div className="bottom-4 right-0 h-6 w-h-6 absolute">
+                            <button
+                              id="delete"
+                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mx-2"
+                              onClick={async (e) => {
+                                e.preventDefault();
+                                await studentService.deleteStudentFromPersonal(
+                                  id,
+                                  student._id
+                                );
+                                setReRender((prev) => !prev);
+                              }}
+                            >
+                              <BsFillTrashFill id="delete" />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     );

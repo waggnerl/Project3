@@ -36,7 +36,6 @@ function LoginPage() {
         // and at last navigate to the home page
         storeToken(response.data.authToken);
         authenticateUser();
-        navigate("/");
       })
 
       .catch((error) => {

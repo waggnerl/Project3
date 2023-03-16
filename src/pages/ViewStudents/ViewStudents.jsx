@@ -56,6 +56,7 @@ function ViewStudents() {
     const getStudents = async () => {
       const data = await studentService.getAll();
       setStudents(data.data);
+      setStudentToAdd(data.data[0]._id);
     };
     const getProfile = async () => {
       try {
@@ -94,9 +95,6 @@ function ViewStudents() {
                   className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
                   onChange={handleStudentToAdd}
                 >
-                  <option value="" disabled>
-                    Choose a Student
-                  </option>
                   {students.map((student) => {
                     return (
                       <option key={student._id} value={student._id}>

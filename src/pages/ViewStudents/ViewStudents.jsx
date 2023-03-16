@@ -15,7 +15,7 @@ function ViewStudents() {
   const [students, setStudents] = useState([]);
   const [userName, setUserName] = useState("");
   const [studentsTeacher, setStudentsTeacher] = useState([]);
-  const [studentToAdd, setStudentToAdd] = useState({});
+  const [studentToAdd, setStudentToAdd] = useState("");
   const [reRender, setReRender] = useState(false);
 
   const handleStudentToAdd = (e) => setStudentToAdd(e.target.value);
@@ -92,7 +92,6 @@ function ViewStudents() {
                 </h2>
                 <select
                   className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                  defaultValue=""
                   onChange={handleStudentToAdd}
                 >
                   <option value="" disabled>

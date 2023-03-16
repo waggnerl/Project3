@@ -19,7 +19,7 @@ function IsAnon({ children }) {
 
   if (isLoggedIn && user.role === "student") {
     // If the user is logged in, navigate to home page ❌
-    return <Navigate to="/" />;
+    return <Navigate to={`/trains/${user._id}`} />;
   }
 
   // If the user is not logged in, allow to see the page ✅

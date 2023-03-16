@@ -159,9 +159,8 @@ function ViewTrains() {
   if (isLoading) return <Loading />;
   return (
     <div
-      className={`h-screen w-full ${
-        exercises.length > 0 ? "max-w-fit sm:max-w-full" : "max-w-full"
-      }   bg-cover bg-center bg-no-repeat min-h-screen  bg-gray-100 flex flex-col justify-start items-center sm:py-12`}
+      className={`h-screen w-full  
+         bg-cover bg-center bg-no-repeat min-h-screen  bg-gray-100 flex flex-col justify-start items-center sm:py-12`}
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className="container mx-auto sm:px-8 bg-white rounded-2xl">

@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../../context/auth.context";
+import { useParams } from "react-router-dom";
+
 import exerciseService from "../../services/exercise.service";
 import GymTrainImage from "../../assets/gym-train.jpg";
 import { AiOutlinePlus } from "react-icons/ai";
 import { toast } from "react-toastify";
 import backgroundImage from "../../assets/gym.jpg";
+import Loading from "../../components/Loading/Loading";
 
 function ViewTrains() {
-  const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
   const { trainId, studentName } = useParams();
   const [exercises, setExercises] = useState([]);
-  const [trainToAdd, setTrainToAdd] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [reps, setReps] = useState("");
@@ -154,8 +152,11 @@ function ViewTrains() {
       const data = await exerciseService.getAll(trainId);
       setExercises(data.data.exercises);
     };
+    setIsLoading(true);
     getTrains();
+    setIsLoading(false);
   }, [trainId, reRender]);
+  if (isLoading) return <Loading />;
   return (
     <div
       className={`h-screen w-full ${

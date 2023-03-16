@@ -6,12 +6,12 @@ import GymTrainImage from "../../assets/gym-train.jpg";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 import backgroundImage from "../../assets/gym.jpg";
-
+import Loading from "../../components/Loading/Loading";
 function ViewTrains() {
   const navigate = useNavigate();
   const { studentId } = useParams();
   const [trains, setTrains] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const [name, setName] = useState("");
   const [studentName, setStudentName] = useState("");
   const [description, setDescription] = useState("");
@@ -114,8 +114,11 @@ function ViewTrains() {
       setStudentName(data.data.name);
       setTrains(data.data.trains);
     };
+    setIsLoading(true);
     getExercises();
+    setIsLoading(false);
   }, [studentId, reRender]);
+  if (isLoading) return <Loading />;
   return (
     <div
       className={`h-screen w-full ${

@@ -5,6 +5,8 @@ import axios from "axios";
 import backgroundImage from "../../assets/gym.jpg";
 import profileImg from "../../assets/profile.png";
 import service from "../../api/service";
+import Loading from "../../components/Loading/Loading";
+import { toast } from "react-toastify";
 
 function ProfilePage(props) {
   const { id } = useParams();
@@ -12,34 +14,58 @@ function ProfilePage(props) {
   const [name, setName] = useState("");
   const [img, setImg] = useState("");
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleName = (e) => setName(e.target.value);
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = async (e) => {
+    e.preventDefault();
     const uploadData = new FormData();
     uploadData.append("img", e.target.files[0]);
-
-    service
-      .uploadImage(uploadData)
-      .then((response) => {
-        setImg(response.fileUrl);
-      })
-      .catch((err) => console.log("Error while uploading the file: ", err));
+    try {
+      setIsLoading(true);
+      const data = await service.uploadImage(uploadData);
+      setIsLoading(false);
+      console.log(data);
+      setImg(data.fileUrl);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(img);
     const body = { name, img };
+
     try {
-      await axios.put(
+      const data = await axios.put(
         `${process.env.REACT_APP_SERVER_URL}/profile/edit/${id}`,
         body
       );
 
+      toast.success(data.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       navigate(`/profile/${id}`);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      const errorDescription = err.response.data.message;
+      toast.error(errorDescription, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -49,7 +75,6 @@ function ProfilePage(props) {
         const response = await axios.get(
           `${process.env.REACT_APP_SERVER_URL}/profile/${id}`
         );
-        console.log(response.data);
         setEmail(response.data.email);
         setName(response.data.name);
         setImg(response.data.img);
@@ -60,7 +85,7 @@ function ProfilePage(props) {
 
     getProfile();
   }, [id]);
-
+  if (isLoading) return <Loading />;
   return (
     <div
       className=" h-screen w-full  bg-cover bg-center bg-no-repeat min-h-screen  bg-gray-100 flex flex-col justify-center items-center sm:py-12"
@@ -88,7 +113,6 @@ function ProfilePage(props) {
                       </td>
                       <td className="px-2 py-2 text-base">
                         <input
-                          className="text-center bg-transparent border-solid border-2"
                           type="text"
                           className="input input-bordered w-full max-w-xs"
                           onChange={handleName}
@@ -133,15 +157,6 @@ function ProfilePage(props) {
                 Update Profile
               </button>
             </form>
-
-            <div className="text-center my-3">
-              <button
-                className="transition duration-200 bg-white hover:bg-black focus:bg-blue-700 focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 rounded-lg hover:text-white border-2 w-full py-2 text-sm"
-                href="#"
-              >
-                View Trains
-              </button>
-            </div>
           </div>
         </div>
       </div>

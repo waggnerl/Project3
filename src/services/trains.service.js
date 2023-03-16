@@ -34,13 +34,15 @@ class TrainService {
   };
 
   // PUT /api/students/:id
-  updateOne = async (id, requestBody) => {
-    return this.api.put(`/api/students/${id}`, requestBody);
+  updateOne = async (requestBody) => {
+    return this.api.put(`/train/update`, requestBody);
   };
 
   // DELETE /api/students/:id
-  deleteProject = async (id) => {
-    return this.api.delete(`/api/students/${id}`);
+  deleteProject = async (trainId) => {
+    return this.api.post(`/train/delete`, {
+      trainId,
+    });
   };
 }
 

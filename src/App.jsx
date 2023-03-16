@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 import ViewTrains from "./pages/ViewTrains/ViewTrains";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
         />
 
         <Route
-          path="/trains/:studentId/:studentName"
+          path="/trains/:studentId"
           element={
             <IsPrivate>
               <ViewTrains />

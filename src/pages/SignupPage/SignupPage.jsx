@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
 import backgroundImage from "../../assets/gym.jpg";
-
+import { toast } from "react-toastify";
 function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +17,7 @@ function SignupPage() {
   const handlePassword = (e) => setPassword(e.target.value);
   const handleName = (e) => setName(e.target.value);
   const handleRole = (e) => setRole(e.target.value);
-
+  console.log(role);
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
@@ -38,6 +38,15 @@ function SignupPage() {
     authService
       .signup(requestBody)
       .then((response) => {
+        toast.success("User created", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         // If the POST request is successful redirect to the login page
         navigate("/login");
       })
@@ -45,6 +54,15 @@ function SignupPage() {
         // If the request resolves with an error, set the error message in the state
         const errorDescription = error.response.data.message;
         setErrorMessage(errorDescription);
+        toast.error(`${errorDescription} `, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
   };
 
@@ -107,7 +125,7 @@ function SignupPage() {
             >
               Sign up
             </button>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
+
             <p>Already have account?</p>
             <Link to={"/login"}> Login</Link>
           </form>

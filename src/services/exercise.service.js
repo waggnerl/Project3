@@ -45,13 +45,17 @@ class ExerciseService {
   };
 
   // PUT /api/students/:id
-  updateOne = async (id, requestBody) => {
-    return this.api.put(`/api/students/${id}`, requestBody);
+  updateOne = async (requestBody) => {
+    console.log(requestBody);
+    return this.api.put(`/exercise/update`, requestBody);
   };
 
   // DELETE /api/students/:id
-  deleteProject = async (id) => {
-    return this.api.delete(`/api/students/${id}`);
+  deleteProject = async (trainId, exetciseId) => {
+    return this.api.post(`/exercise/delete`, {
+      trainId,
+      exetciseId,
+    });
   };
 }
 

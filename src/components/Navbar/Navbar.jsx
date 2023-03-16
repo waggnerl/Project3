@@ -7,7 +7,6 @@ function Navbar() {
   // Subscribe to the AuthContext to gain access to
   // the values from AuthContext.Provider's `value` prop
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
-
   return (
     <div className="navbar bg-base-100 bg-white ">
       <div className="flex-1">
@@ -16,7 +15,13 @@ function Navbar() {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link to="/">
+            <Link
+              to={
+                user && user.role === "personal"
+                  ? "/list-students"
+                  : user && `/trains/${user._id}`
+              }
+            >
               <button>Home</button>
             </Link>
           </li>

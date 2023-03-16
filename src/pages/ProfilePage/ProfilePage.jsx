@@ -88,7 +88,6 @@ function ProfilePage(props) {
                       </td>
                       <td className="px-2 py-2 text-base">
                         <input
-                          className="text-center bg-transparent border-solid border-2"
                           type="text"
                           className="input input-bordered w-full max-w-xs"
                           onChange={handleName}

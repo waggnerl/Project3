@@ -149,7 +149,11 @@ function ViewStudents() {
                               <div className="flex-shrink-0 w-10 h-10 table-cell">
                                 <img
                                   className="w-full h-full rounded-full"
-                                  src="https://images.unsplash.com/photo-1601046668428-94ea13437736?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2167&q=80"
+                                  src={
+                                    student.img
+                                      ? student.img
+                                      : "https://images.unsplash.com/photo-1601046668428-94ea13437736?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2167&q=80"
+                                  }
                                   alt=""
                                 />
                               </div>

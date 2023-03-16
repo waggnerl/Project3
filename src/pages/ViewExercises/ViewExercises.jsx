@@ -344,7 +344,7 @@ function ViewTrains() {
                         }}
                         className="btn btn-error w-1/3"
                       >
-                        Delete Train
+                        Delete Exercise
                       </button>
                       <label htmlFor="my-modal2" className="btn w-1/3">
                         See Activicties

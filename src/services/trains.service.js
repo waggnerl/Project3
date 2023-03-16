@@ -34,8 +34,8 @@ class TrainService {
   };
 
   // PUT /api/students/:id
-  updateOne = async (id, requestBody) => {
-    return this.api.put(`/api/students/${id}`, requestBody);
+  updateOne = async (requestBody) => {
+    return this.api.put(`/train/update`, requestBody);
   };
 
   // DELETE /api/students/:id

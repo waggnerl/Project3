@@ -2,15 +2,16 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
-
+import TrainSmart from "../../assets/trainsmart.png";
 function Navbar() {
   // Subscribe to the AuthContext to gain access to
   // the values from AuthContext.Provider's `value` prop
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   return (
-    <div className="navbar bg-base-100 bg-white ">
-      <div className="flex-1">
-        <a>Train Smart</a>
+    <div className="navbar  bg-white ">
+      <div className="flex-1 p-3">
+        <img className="w-6" alt="logo" src={TrainSmart} />
+        <p className="text-xs sm:text-base">Train Smart</p>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
@@ -22,7 +23,7 @@ function Navbar() {
                   : user && `/trains/${user._id}`
               }
             >
-              <button>Home</button>
+              <button className="text-xs sm:text-base">Home</button>
             </Link>
           </li>
 
@@ -30,16 +31,16 @@ function Navbar() {
             <>
               <li>
                 <Link to="/signup" className="flex  items-center">
-                  <button class="block lg:inline-block text-black-200 hover:text-slate-400">
+                  <button class="block lg:inline-block text-xs sm:text-base text-black-200 hover:text-slate-400">
                     Sign-Up
-                  </button>{" "}
+                  </button>
                 </Link>
               </li>
               <li>
                 <Link to="/login" className="flex  items-center">
-                  <button class="block lg:inline-block text-black-200 hover:text-slate-400">
+                  <button class="block text-xs sm:text-base lg:inline-block text-black-200 hover:text-slate-400">
                     Log-In
-                  </button>{" "}
+                  </button>
                 </Link>
               </li>
             </>
@@ -47,12 +48,14 @@ function Navbar() {
           {isLoggedIn && (
             <>
               <li>
-                <button onClick={logOutUser}>Logout</button>
+                <Link to={`/profile/${user._id}`}>
+                  <button className="text-xs sm:text-base">Profile</button>
+                </Link>
               </li>
               <li>
-                <Link to={`/profile/${user._id}`}>
-                  <button>Profile</button>
-                </Link>
+                <button className="text-xs sm:text-base" onClick={logOutUser}>
+                  Logout
+                </button>
               </li>
             </>
           )}

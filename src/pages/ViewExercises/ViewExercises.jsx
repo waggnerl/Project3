@@ -160,10 +160,10 @@ function ViewTrains() {
   return (
     <div
       className={`h-screen w-full  
-         bg-cover bg-center bg-no-repeat min-h-screen  bg-gray-100 flex flex-col justify-start items-center sm:py-12`}
+         bg-cover bg-center bg-no-repeat min-h-screen   bg-gray-100 flex flex-col justify-start items-center sm:py-12`}
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="container mx-auto sm:px-8 bg-white rounded-2xl">
+      <div className="container mt-6 mx-auto px-4 sm:px-8 bg-white rounded-2xl">
         <div className="py-8">
           <div>
             <h2 className="text-2xl font-semibold text-left leading-tight">
@@ -284,11 +284,11 @@ function ViewTrains() {
                 </div>
               </div>
             </form>
-            <div className="flex flex-wrap gap-6 max-w-fit">
+            <div className="flex flex-wrap gap-6 justify-center sm:justify-start">
               {exercises.map((exercise) => (
                 <div
                   key={exercise._id}
-                  className="card w-96 bg-base-100 shadow-xl"
+                  className="card w-80 bg-base-100 shadow-xl"
                 >
                   <figure>
                     <img src={GymTrainImage} alt="Shoes" />

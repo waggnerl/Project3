@@ -74,14 +74,14 @@ function ViewStudents() {
     getStudentsFromPersonal();
     getStudents();
   }, [id, reRender]);
-
+  if (user.role === "student") navigate(`/trains/${id}`);
   if (students && studentsTeacher && user.role === "personal")
     return (
       <div
         className=" h-screen w-full  bg-cover bg-center bg-no-repeat min-h-screen  bg-gray-100 flex flex-col justify-start items-center sm:py-12"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <div className="container mx-auto px-4 sm:px-8 bg-white rounded-2xl">
+        <div className="container mx-auto mt-6 px-4 sm:px-8 bg-white rounded-2xl">
           <div className="py-8">
             <div>
               <h2 className="text-2xl font-semibold text-left leading-tight">
@@ -163,7 +163,7 @@ function ViewStudents() {
                             </p>
                             <div
                               id="delete"
-                              className="bottom-4 right-0 h-6 w-h-6 absolute"
+                              className="bottom-7 right-0 h-6 w-h-6 absolute"
                             >
                               <button
                                 id="delete"

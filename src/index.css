@@ -1,6 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Montserrat:wght@100;500;700;900&family=Open+Sans:ital,wght@0,300;1,500&family=Raleway&display=swap");
+@layer base {
+  html {
+    font-family: Raleway, sans-serif;
+  }
+}
 body {
   margin: 0;
 }

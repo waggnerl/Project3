@@ -9,7 +9,6 @@ function SignupPage() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
-  const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
 
@@ -53,7 +52,6 @@ function SignupPage() {
       .catch((error) => {
         // If the request resolves with an error, set the error message in the state
         const errorDescription = error.response.data.message;
-        setErrorMessage(errorDescription);
         toast.error(`${errorDescription} `, {
           position: "top-center",
           autoClose: 5000,
@@ -69,7 +67,7 @@ function SignupPage() {
   return (
     <div
       style={{ backgroundImage: `url(${backgroundImage})` }}
-      className="bg-cover bg-center bg-no-repeat min-h-screen bg-gray-100  flex flex-col justify-center sm:py-12"
+      className="bg-cover bg-center bg-no-repeat min-h-screen bg-gray-100  flex flex-col justify-start pt-28 sm:justify-center sm:py-12"
     >
       <div className="p-5 xs:p-0 mx-auto drop-shadow md:w-full md:max-w-md">
         <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">

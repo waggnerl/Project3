@@ -342,14 +342,20 @@ function ViewTrains() {
                             });
                           }
                         }}
-                        className="btn btn-error w-1/3"
+                        className="btn btn-error w-1/3 sm:text-sm text-xs"
                       >
                         Delete Exercise
                       </button>
-                      <label htmlFor="my-modal2" className="btn w-1/3">
+                      <label
+                        htmlFor="my-modal2"
+                        className="btn w-1/3 sm:text-sm text-xs"
+                      >
                         See Activicties
                       </label>
-                      <label htmlFor="my-modal-edit" className="btn w-1/3">
+                      <label
+                        htmlFor="my-modal-edit"
+                        className="btn w-1/3 sm:text-sm text-xs"
+                      >
                         Update Exercise
                       </label>
                     </div>

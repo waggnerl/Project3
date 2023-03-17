@@ -58,11 +58,11 @@ function LoginPage() {
   return (
     <div
       style={{ backgroundImage: `url(${backgroundImage})` }}
-      className="bg-cover bg-center bg-no-repeat min-h-screen  bg-gray-100 flex flex-col justify-center sm:py-12"
+      className="bg-cover bg-center bg-no-repeat min-h-screen  bg-gray-100 flex flex-col justify-start pt-28 sm:justify-center sm:py-12"
     >
       <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
         <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
-          <form onSubmit={handleLoginSubmit} className="px-5 py-7">
+          <form onSubmit={handleLoginSubmit} className="px-5 py-3 sm:py-7">
             <h1 className="font-bold text-center text-2xl mb-5">Login</h1>
             <label className="font-semibold text-sm text-left text-gray-600 pb-1 block">
               E-mail

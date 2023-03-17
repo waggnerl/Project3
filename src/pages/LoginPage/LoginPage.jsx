@@ -58,7 +58,7 @@ function LoginPage() {
   return (
     <div
       style={{ backgroundImage: `url(${backgroundImage})` }}
-      className="bg-cover bg-center bg-no-repeat min-h-screen  bg-gray-100 flex flex-col justify-start pt-28 sm:justify-center sm:py-12"
+      className="bg-cover bg-center bg-no-repeat min-h-screen  bg-gray-100 flex flex-col justify-start pt-24 sm:justify-center sm:py-12"
     >
       <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
         <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">

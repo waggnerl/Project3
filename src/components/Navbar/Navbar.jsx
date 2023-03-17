@@ -9,10 +9,10 @@ function Navbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   return (
     <div className="navbar  bg-white ">
-      <div className="flex-1 p-3">
+      <Link to={isLoggedIn ? "/list-students " : "/"} className="flex-1 p-3">
         <img className="w-6" alt="logo" src={TrainSmart} />
         <p className="text-xs sm:text-base">Train Smart</p>
-      </div>
+      </Link>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>

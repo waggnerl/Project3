@@ -90,7 +90,7 @@ function ProfilePage(props) {
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className="">
-        <div className="bg-white shadow-xl rounded-lg p-12 h-[450px] w-96 flex flex-col items-center	">
+        <div className="bg-white shadow-xl rounded-lg p-12 min-h-min h-[450px] w-96 flex flex-col items-center	">
           <div className="w-24 mask mask-squircle justify-center">
             <img src={img} alt={img} />
           </div>

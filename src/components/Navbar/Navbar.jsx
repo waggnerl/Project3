@@ -15,18 +15,6 @@ function Navbar() {
       </Link>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
-          <li>
-            <Link
-              to={
-                user && user.role === "personal"
-                  ? "/list-students"
-                  : user && `/trains/${user._id}`
-              }
-            >
-              <button className="text-xs sm:text-base">Home</button>
-            </Link>
-          </li>
-
           {!isLoggedIn && (
             <>
               <li>
@@ -47,6 +35,17 @@ function Navbar() {
           )}
           {isLoggedIn && (
             <>
+              <li>
+                <Link
+                  to={
+                    user && user.role === "personal"
+                      ? "/list-students"
+                      : user && `/trains/${user._id}`
+                  }
+                >
+                  <button className="text-xs sm:text-base">Home</button>
+                </Link>
+              </li>
               <li>
                 <Link to={`/profile/${user._id}`}>
                   <button className="text-xs sm:text-base">Profile</button>
